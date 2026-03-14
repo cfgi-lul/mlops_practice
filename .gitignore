@@ -3,3 +3,10 @@ target
 *.iml
 **/*.iml
 **/.env
+
+# data
+lab1/train
+lab1/test
+
+# models
+lab1/model.pkl
