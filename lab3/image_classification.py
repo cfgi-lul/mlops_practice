@@ -2,21 +2,21 @@ import io
 import streamlit as st
 from PIL import Image
 import numpy as np
-from tensorflow.keras.applications import EfficientNetB0
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.efficientnet import preprocess_input, decode_predictions
+import tensorflow as tf
+from keras.applications import EfficientNetB0
+from keras.utils import load_img, img_to_array
+from keras.applications.efficientnet import decode_predictions
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
     return EfficientNetB0(weights='imagenet')
 
 
 def preprocess_image(img):
     img = img.resize((224, 224))
-    x = image.img_to_array(img)
+    x = img_to_array(img)
     x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
     return x
 
 
@@ -33,16 +33,16 @@ def load_image():
 def print_predictions(preds):
     classes = decode_predictions(preds, top=3)[0]
     for cl in classes:
-        st.write(cl[1], cl[2])
+        st.write(f"{cl[1]} — {cl[2]:.4f}")
 
 
 model = load_model()
 
+st.title('Новая улучшенная классификация изображений в облаке Streamlit')
 
-st.title('Новая улучшенная классификации изображений в облаке Streamlit')
 img = load_image()
-result = st.button('Распознать изображение')
-if result:
+
+if st.button('Распознать изображение') and img is not None:
     x = preprocess_image(img)
     preds = model.predict(x)
     st.write('**Результаты распознавания:**')
