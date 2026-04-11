@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - lab3
   workflow_dispatch:
 
 jobs:
