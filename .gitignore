@@ -4,6 +4,7 @@ target
 *.iml
 **/*.iml
 **/.env
+**/.venv
 
 # data
 lab1/train
@@ -11,3 +12,4 @@ lab1/test
 
 # models
 lab1/model.pkl
+
