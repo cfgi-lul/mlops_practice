@@ -1,0 +1,31 @@
+stages:
+  - test
+  - build
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+test_final_task:
+  stage: test
+  image: python:3.12
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r "final task/requirements.txt"
+  script:
+    - cd "final task"
+    - PYTHONPATH=. pytest -q
+
+build_docker_image:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker build -t final-task-streamlit:latest "final task"
