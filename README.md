@@ -79,7 +79,7 @@ Model test accuracy is: 0.876
 
 </details>
 
-## Module 6
+## Module 5
 <details>
 
 ### Тестирование качества работы моделей машинного обучения
